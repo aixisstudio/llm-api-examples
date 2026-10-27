@@ -57,5 +57,36 @@ import litellm
 r = litellm.completion(model="ollama/qwen3", messages=[{"role":"user","content":"hi"}])
 ```
 
+## 🔄 Provider comparison
+
+| Provider | SDK | Best model | Notes |
+|---|---|---|---|
+| OpenAI | `openai` | GPT-4o/o-series | Reference implementation |
+| Anthropic | `anthropic` | Claude Sonnet/Opus | Best long-form reasoning |
+| Google | `google-genai` | Gemini Pro | Long context, cheap flash |
+| Mistral | `mistralai` | Mistral Large | EU option |
+| OpenRouter | `openai`-compatible | All of them | One key → every model |
+
+## 🧰 Standard patterns
+
+```python
+# Streaming (all SDKs similar)
+stream = client.chat.completions.create(model="gpt-4o", messages=msgs, stream=True)
+for chunk in stream:
+    print(chunk.choices[0].delta.content or "", end="")
+
+# Retry with backoff — 429s are normal
+from tenacity import retry, wait_exponential
+@retry(wait=wait_exponential(min=1, max=60))
+def call(): return client.chat.completions.create(...)
+
+# Cost tracking
+usage = resp.usage  # prompt_tokens, completion_tokens — log these
+```
+
+## 📏 Prompt caching
+
+Both OpenAI and Anthropic cache long prefixes — put system prompt + docs first, variable part last. 50-90% cost cut on RAG.
+
 ---
 Maintained by [aixisstudio](https://github.com/aixisstudio).
