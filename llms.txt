@@ -42,4 +42,15 @@ print(r.choices[0].message.content)
 ```python
 for chunk in client.chat.completions.create(model="gpt-4o-mini",
         messages=[{"role":"user","content":"count to 5"}], stream=True):
-    if chunk.choices[0].delta.content: print(chu
+    if chunk.choices[0].delta.content: print(chunk.choices[0].delta.content, end="")
+```
+
+## 🔧 Function calling (OpenAI)
+```python
+tools=[{"type":"function","function":{"name":"get_weather","parameters":{"type":"object","properties":{"city":{"type":"string"}}}}}]
+r = client.chat.completions.create(model="gpt-4o-mini", messages=[...], tools=tools)
+```
+
+## 💡 One client, all providers: [LiteLLM](https://github.com/BerriAI/litellm)
+```python
+import
