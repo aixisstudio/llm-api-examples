@@ -4,9 +4,7 @@
 
 主要 LLM API のコピペ用サンプル集
 
-_詳細なコンテンツ（リスト・リンク・説明）は保守のため英語です。以下のセクションがガイドになります。_
-
-## 🔌 OpenAI
+##  Open オープンAI
 ```python
 from openai import OpenAI
 client = OpenAI()
@@ -16,7 +14,7 @@ r = client.chat.completions.create(
 print(r.choices[0].message.content)
 ```
 
-## 🧠 Anthropic (Claude)
+## 🧠 Anthropic (クロード)
 ```python
 import anthropic
 c = anthropic.Anthropic()
@@ -25,7 +23,7 @@ m = c.messages.create(model="claude-sonnet-4-20250514", max_tokens=1024,
 print(m.content[0].text)
 ```
 
-## 🇫🇷 Mistral
+## ユ・ミストラル
 ```python
 from mistralai import Mistral
 m = Mistral(api_key="...")
@@ -34,7 +32,7 @@ r = m.chat.complete(model="mistral-small-latest",
 print(r.choices[0].message.content)
 ```
 
-## 🏠 Local (Ollama — OpenAI-compatible)
+## ローカル (Ollama — OpenAI 対応)
 ```python
 from openai import OpenAI
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
@@ -42,36 +40,36 @@ r = client.chat.completions.create(model="qwen3", messages=[{"role":"user","cont
 print(r.choices[0].message.content)
 ```
 
-## 🌊 Streaming
+## 武道
 ```python
 for chunk in client.chat.completions.create(model="gpt-4o-mini",
         messages=[{"role":"user","content":"count to 5"}], stream=True):
     if chunk.choices[0].delta.content: print(chunk.choices[0].delta.content, end="")
 ```
 
-## 🔧 Function calling (OpenAI)
+## ❀ 関数呼び出し(OpenAI)
 ```python
 tools=[{"type":"function","function":{"name":"get_weather","parameters":{"type":"object","properties":{"city":{"type":"string"}}}}}]
 r = client.chat.completions.create(model="gpt-4o-mini", messages=[...], tools=tools)
 ```
 
-## 💡 One client, all providers: [LiteLLM](https://github.com/BerriAI/litellm)
+## 1つのクライアント、すべてのプロバイダ: [LiteLLM](https://github.com/BerriAI/litellm)
 ```python
 import litellm
 r = litellm.completion(model="ollama/qwen3", messages=[{"role":"user","content":"hi"}])
 ```
 
-## 🔄 Provider comparison
+## クライアントの比較
 
-| Provider | SDK | Best model | Notes |
+| 提供者 | SDK | ベストモデル | ノート |
 |---|---|---|---|
-| OpenAI | `openai` | GPT-4o/o-series | Reference implementation |
-| Anthropic | `anthropic` | Claude Sonnet/Opus | Best long-form reasoning |
-| Google | `google-genai` | Gemini Pro | Long context, cheap flash |
-| Mistral | `mistralai` | Mistral Large | EU option |
-| OpenRouter | `openai`-compatible | All of them | One key → every model |
+| OpenAI | `openai` | GPT-4o/oシリーズ | リファレンス実装 |
+| 人類性 | `anthropic` | クロード・ソンネット | オーパス | 最長の理由 |
+| Google | `google-genai` | ジェミニプロ | ロングコンテクスト・安いフラッシュ |
+| ミストラル | `mistralai` | ミストラル大 | EUオプション |
+| OpenRouter | `openai`対応 | 全て | ワンキー → 各モデル |
 
-## 🧰 Standard patterns
+##標準パターン
 
 ```python
 # Streaming (all SDKs similar)
@@ -88,9 +86,9 @@ def call(): return client.chat.completions.create(...)
 usage = resp.usage  # prompt_tokens, completion_tokens — log these
 ```
 
-## 📏 Prompt caching
+## 通常のキャッシング
 
-Both OpenAI and Anthropic cache long prefixes — put system prompt + docs first, variable part last. 50-90% cost cut on RAG.
+OpenAI と Anthropic キャッシュの長いプレフィックスの両方 — システムプロンプト + docs を最初に置き、変数部分は最後に続きます。 RAGで50-90%のコストカット。
 
 ---
 ## 貢献
