@@ -4,8 +4,6 @@
 
 Ejemplos listos para APIs de LLM
 
-_El contenido detallado (listas, enlaces, descripciones) está en inglés por mantenibilidad — las secciones siguientes te guían._
-
 ## 🔌 OpenAI
 ```python
 from openai import OpenAI
@@ -16,7 +14,7 @@ r = client.chat.completions.create(
 print(r.choices[0].message.content)
 ```
 
-## 🧠 Anthropic (Claude)
+## 🧠 Antropopic (Claude)
 ```python
 import anthropic
 c = anthropic.Anthropic()
@@ -25,7 +23,7 @@ m = c.messages.create(model="claude-sonnet-4-20250514", max_tokens=1024,
 print(m.content[0].text)
 ```
 
-## 🇫🇷 Mistral
+## 🇫 Desnudez Mistral
 ```python
 from mistralai import Mistral
 m = Mistral(api_key="...")
@@ -34,7 +32,7 @@ r = m.chat.complete(model="mistral-small-latest",
 print(r.choices[0].message.content)
 ```
 
-## 🏠 Local (Ollama — OpenAI-compatible)
+##  tuya Local (Ollama — OpenAI-compatible)
 ```python
 from openai import OpenAI
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
@@ -49,27 +47,27 @@ for chunk in client.chat.completions.create(model="gpt-4o-mini",
     if chunk.choices[0].delta.content: print(chunk.choices[0].delta.content, end="")
 ```
 
-## 🔧 Function calling (OpenAI)
+## 🔧 Función llamando (OpenAI)
 ```python
 tools=[{"type":"function","function":{"name":"get_weather","parameters":{"type":"object","properties":{"city":{"type":"string"}}}}}]
 r = client.chat.completions.create(model="gpt-4o-mini", messages=[...], tools=tools)
 ```
 
-## 💡 One client, all providers: [LiteLLM](https://github.com/BerriAI/litellm)
+## ♥ Un cliente, todos los proveedores: [LiteLLM](https://github.com/BerriAI/litellm)
 ```python
 import litellm
 r = litellm.completion(model="ollama/qwen3", messages=[{"role":"user","content":"hi"}])
 ```
 
-## 🔄 Provider comparison
+## 🔄 Comparación de proveedores
 
-| Provider | SDK | Best model | Notes |
+Silencioso Proveedor Silencio SDK Silencio Mejor modelo
 |---|---|---|---|
-| OpenAI | `openai` | GPT-4o/o-series | Reference implementation |
-| Anthropic | `anthropic` | Claude Sonnet/Opus | Best long-form reasoning |
-| Google | `google-genai` | Gemini Pro | Long context, cheap flash |
-| Mistral | `mistralai` | Mistral Large | EU option |
-| OpenRouter | `openai`-compatible | All of them | One key → every model |
+Silencio OpenAI Silencio `openai` Silencio GPT-4o/o-series 
+Silencio Antrópico TENIDO `anthropic` ANTE Claude Sonnet/Opus El mejor razonamiento de larga duración
+Silencio Google Silencio `google-genai` Silencio Gemini Pro Silencio Contexto largo, flash barato
+Silencio Mistral Silencio `mistralai` Silencio Mistral Grande Silencioso
+Silencio OpenRouter ← `openai`-compatible Silencio Todos ellos ← Una clave → cada modelo ←
 
 ## 🧰 Standard patterns
 
@@ -90,7 +88,7 @@ usage = resp.usage  # prompt_tokens, completion_tokens — log these
 
 ## 📏 Prompt caching
 
-Both OpenAI and Anthropic cache long prefixes — put system prompt + docs first, variable part last. 50-90% cost cut on RAG.
+Tanto OpenAI como los prefijos largos de caché antropópico — poner el sistema rápido + docs primero, parte variable último. 50-90% de coste reducido en RAG.
 
 ---
 ## Contribuir
