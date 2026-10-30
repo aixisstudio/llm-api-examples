@@ -4,9 +4,7 @@
 
 Exemples copiables pour les APIs OpenAI, Anthropic, Mistral & locales
 
-_Le contenu détaillé (listes, liens, descriptions) est en anglais pour rester maintenable — les sections ci-dessous te guident._
-
-## 🔌 OpenAI
+Ouverture de l'AI
 ```python
 from openai import OpenAI
 client = OpenAI()
@@ -16,7 +14,7 @@ r = client.chat.completions.create(
 print(r.choices[0].message.content)
 ```
 
-## 🧠 Anthropic (Claude)
+C'est une anthropique (Claude)
 ```python
 import anthropic
 c = anthropic.Anthropic()
@@ -25,7 +23,7 @@ m = c.messages.create(model="claude-sonnet-4-20250514", max_tokens=1024,
 print(m.content[0].text)
 ```
 
-## 🇫🇷 Mistral
+La Mistral
 ```python
 from mistralai import Mistral
 m = Mistral(api_key="...")
@@ -34,7 +32,7 @@ r = m.chat.complete(model="mistral-small-latest",
 print(r.choices[0].message.content)
 ```
 
-## 🏠 Local (Ollama — OpenAI-compatible)
+Local (Ollama – compatible OpenAI)
 ```python
 from openai import OpenAI
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
@@ -42,36 +40,36 @@ r = client.chat.completions.create(model="qwen3", messages=[{"role":"user","cont
 print(r.choices[0].message.content)
 ```
 
-## 🌊 Streaming
+Le flux
 ```python
 for chunk in client.chat.completions.create(model="gpt-4o-mini",
         messages=[{"role":"user","content":"count to 5"}], stream=True):
     if chunk.choices[0].delta.content: print(chunk.choices[0].delta.content, end="")
 ```
 
-## 🔧 Function calling (OpenAI)
+Fonction appelant (OpenAI)
 ```python
 tools=[{"type":"function","function":{"name":"get_weather","parameters":{"type":"object","properties":{"city":{"type":"string"}}}}}]
 r = client.chat.completions.create(model="gpt-4o-mini", messages=[...], tools=tools)
 ```
 
-## 💡 One client, all providers: [LiteLLM](https://github.com/BerriAI/litellm)
+Un seul client, tous les fournisseurs : [LiteLLM](https://github.com/BerriAI/litellm)
 ```python
 import litellm
 r = litellm.completion(model="ollama/qwen3", messages=[{"role":"user","content":"hi"}])
 ```
 
-## 🔄 Provider comparison
+Comparaison des fournisseurs
 
-| Provider | SDK | Best model | Notes |
+Le meilleur modèle Notes
 |---|---|---|---|
-| OpenAI | `openai` | GPT-4o/o-series | Reference implementation |
-| Anthropic | `anthropic` | Claude Sonnet/Opus | Best long-form reasoning |
-| Google | `google-genai` | Gemini Pro | Long context, cheap flash |
-| Mistral | `mistralai` | Mistral Large | EU option |
-| OpenRouter | `openai`-compatible | All of them | One key → every model |
+Ouverture de l'API `openai`
+Claude Sonnet/Opus Meilleur raisonnement long-forme
+Google (en anglais seulement) `google-genai` (en anglais seulement)
+Mistral (en anglais seulement)
+OpenRouter (en anglais seulement) `openai`-compatible (en anglais seulement)
 
-## 🧰 Standard patterns
+Modèles standard
 
 ```python
 # Streaming (all SDKs similar)
@@ -88,9 +86,9 @@ def call(): return client.chat.completions.create(...)
 usage = resp.usage  # prompt_tokens, completion_tokens — log these
 ```
 
-## 📏 Prompt caching
+Cache rapide
 
-Both OpenAI and Anthropic cache long prefixes — put system prompt + docs first, variable part last. 50-90% cost cut on RAG.
+OpenAI et Anthropic cache préfixes longs — mettre le système invite + docs en premier, la partie variable en dernier. Réduction des coûts de RAG de 50 à 90 %.
 
 ---
 ## Contribuer
