@@ -91,7 +91,7 @@ usage = resp.usage  # prompt_tokens, completion_tokens — log these
 Both OpenAI and Anthropic cache long prefixes — put system prompt + docs first, variable part last. 50-90% cost cut on RAG.
 
 ---
-Maintained by [aixisstudio](https://github.com/aixisstudio) — author of [Snitch](https://github.com/aixisstudio/Snitch), the open-source application firewall.
+Maintained by [aixisstudio](https://github.com/aixisstudio) — author of [Wiretap](https://github.com/aixisstudio/Wiretap), the open-source application firewall.
 
 ## License
 
